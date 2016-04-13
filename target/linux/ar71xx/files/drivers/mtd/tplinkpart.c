@@ -162,7 +162,7 @@ static int tplink_parse_partitions(struct mtd_info *master,
 	parts[3].name = "art";
 	parts[3].offset = art_offset;
 	parts[3].size = TPLINK_ART_LEN;
-	parts[3].mask_flags = MTD_WRITEABLE;
+//	parts[3].mask_flags = MTD_WRITEABLE;
 
 	parts[4].name = "firmware";
 	parts[4].offset = offset;
