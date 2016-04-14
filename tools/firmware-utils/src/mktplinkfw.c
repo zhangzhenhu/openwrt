@@ -69,7 +69,7 @@
 #define HWID_TL_WR841ND_V7	0x08410007
 #define HWID_TL_WR941ND_V2	0x09410002
 #define HWID_TL_WR941ND_V4	0x09410004
-#define HWID_TL_WR2041N_V1  0x20410001   //定义硬件ID
+#define HWID_TL_WR2041N_V1	0x20410001   //定义硬件ID
 #define HWID_TL_WR1043ND_V1	0x10430001
 #define HWID_TL_WR1043ND_V2	0x10430002
 #define HWID_TL_WR1041N_V2	0x10410002
@@ -377,11 +377,11 @@ static struct board_info boards[] = {
 		.hw_rev		= 1,
 		.layout_id	= "4M",
 	},{
-        .id     = "TL-WR2041Nv1",
-        .hw_id      = HWID_TL_WR2041N_V1,
-        .hw_rev     = 1,
-        .layout_id  = "4Mlzma",
-    }, {
+		.id		= "TL-WR2041Nv1",
+		.hw_id	 	= HWID_TL_WR2041N_V1,
+		.hw_rev		= 1,
+		.layout_id	= "4Mlzma",
+	}, {
 		.id		= "TL-WR1041Nv2",
 		.hw_id		= HWID_TL_WR1041N_V2,
 		.hw_rev		= 1,

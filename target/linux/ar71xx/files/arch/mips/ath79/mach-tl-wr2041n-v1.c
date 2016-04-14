@@ -107,13 +107,13 @@ static struct gpio_keys_button tl_wr2041n_v1_gpio_keys[] __initdata = {
 };
 
 
-static const char *tl_wr941n_v6_part_probes[] = {
+static const char *tl_wr2041n_v1_part_probes[] = {
 	"tp-link",
 	NULL,
 };
 
-static struct flash_platform_data tl_wr941n_v6_flash_data = {
-	.part_probes	= tl_wr941n_v6_part_probes,
+static struct flash_platform_data tl_wr2041n_v1_flash_data = {
+	.part_probes	= tl_wr2041n_v1_part_probes,
 };
 
 
@@ -122,7 +122,7 @@ static void __init tl_wr2041n_v1_setup(void)
 	u8 *mac = (u8 *) KSEG1ADDR(0x1f01fc00);
 	u8 *ee = (u8 *) KSEG1ADDR(0x1fff1000);
 
-	ath79_register_m25p80(&tl_wr941n_v6_flash_data);
+	ath79_register_m25p80(&tl_wr2041n_v1_flash_data);
 
 	ath79_register_leds_gpio(-1, ARRAY_SIZE(tl_wr2041n_v1_leds_gpio),
 				 tl_wr2041n_v1_leds_gpio);
