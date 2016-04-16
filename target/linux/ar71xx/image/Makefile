@@ -613,14 +613,14 @@ define Device/tl-wr941nd-v6-cn
     TPLINK_HWID := 0x09410006
 endef
 
-define Device/tl-wr2041-v1
+define Device/tl-wr2041n-v1
     $(Device/tplink-4mlzma)
     BOARDNAME := TL-WR2041N-v1
     DEVICE_PROFILE := TLWR2041
     TPLINK_HWID := 0x20410001
 endef
 
-TARGET_DEVICES += tl-wr941nd-v5 tl-wr941nd-v6 tl-wr941nd-v6-cn tl-wr2041-v1
+TARGET_DEVICES += tl-wr941nd-v5 tl-wr941nd-v6 tl-wr941nd-v6-cn tl-wr2041n-v1
 
 define Device/tl-wr1041n-v2
     $(Device/tplink-4mlzma)
