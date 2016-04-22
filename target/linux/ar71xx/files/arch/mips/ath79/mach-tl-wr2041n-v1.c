@@ -33,25 +33,23 @@
  * Unknown external PA and LNA GPIO, maybe we can refer to Qihoo C301, already disabled JTAG.
  * Turbo button and led need driver.
  */
-#define WR2041N_GPIO_LED_TURBO		12 
+#define WR2041N_GPIO_LED_TURBO		12 //ok 
 
 /* The WLAN LEDs use GPIOs on the discrete AR9381 wmac ( single 2.4g version of AR9380 ) */
 /* this value is not confirmed at this point */
-//#define WR2041N_GPIO_WMAC_LED_WLAN	13
-#define WR2041N_GPIO_LED_SYSTEM		18 //ok 
-#define WR2041N_GPIO_LED_QSS		3 
-//#define WR2041N_GPIO_LED_QSS_RESET	16 
+#define WR2041N_GPIO_WMAC_LED_WLAN	1
+#define WR2041N_GPIO_LED_SYSTEM		14 //ok 
+#define WR2041N_GPIO_LED_QSS		15 //ok 
 
-#define WR2041N_GPIO_LED_WLAN		8
-#define WR2041N_GPIO_LED_WAN		14
-//#define WR2041N_GPIO_LED_WAN_RED	15
-#define WR2041N_GPIO_LED_LAN1		7
-#define WR2041N_GPIO_LED_LAN2		6
-#define WR2041N_GPIO_LED_LAN3		5
-#define WR2041N_GPIO_LED_LAN4		4
+//#define WR2041N_GPIO_LED_WLAN		8
+#define WR2041N_GPIO_LED_WAN		18
+#define WR2041N_GPIO_LED_LAN1		19
+#define WR2041N_GPIO_LED_LAN2		20
+#define WR2041N_GPIO_LED_LAN3		21
+#define WR2041N_GPIO_LED_LAN4		22
 
 #define WR2041N_GPIO_BTN_RESET		16 //ok
-#define WR2041N_GPIO_BTN_TURBO		17 
+#define WR2041N_GPIO_BTN_TURBO		17 // ok 
 
 #define WR2041N_KEYS_POLL_INTERVAL	20	/* msecs */
 #define WR2041N_KEYS_DEBOUNCE_INTERVAL	(3 * WR2041N_KEYS_POLL_INTERVAL)
@@ -81,17 +79,18 @@ static struct gpio_led wr2041n_leds_gpio[] __initdata = {
 		.gpio		= WR2041N_GPIO_LED_SYSTEM,
 		.active_low	= 1,
 	},
+
         {
                 .name           = "tp-link:green:turbo",
                 .gpio           = WR2041N_GPIO_LED_TURBO,
                 .active_low     = 1,
         },
-	{
+/*	{
 		.name		= "tp-link:green:wlan",
 		.gpio		= WR2041N_GPIO_LED_WLAN,
 		.active_low	= 1,
 	},
-        {
+*/        {
                 .name           = "tp-link:green:wan",
                 .gpio           = WR2041N_GPIO_LED_WAN,
                 .active_low     = 1,
@@ -116,7 +115,6 @@ static struct gpio_led wr2041n_leds_gpio[] __initdata = {
                 .gpio           = WR2041N_GPIO_LED_LAN4,
                 .active_low     = 1,
         },
-
 };
 
 static struct gpio_keys_button wr2041n_gpio_keys[] __initdata = {
@@ -150,7 +148,7 @@ static void __init wr2041n_setup(void)
 
 	ath79_register_m25p80(&wr2041n_flash_data);
 	/* Disable JTAG to enable GPIO 0-4 */
-	//ath79_gpio_function_enable(AR934X_GPIO_FUNC_JTAG_DISABLE);
+	ath79_gpio_function_enable(AR934X_GPIO_FUNC_JTAG_DISABLE);
 
 	ath79_register_leds_gpio(-1, ARRAY_SIZE(wr2041n_leds_gpio),
 				 wr2041n_leds_gpio);
@@ -164,6 +162,12 @@ static void __init wr2041n_setup(void)
 	ath79_init_mac(tmpmac, mac, 1);
 	// try to setup wlan led pin
 	//ath79_wmac_set_led_pin(WR2041N_GPIO_WMAC_LED_WLAN);
+        /*
+         * The ath9k driver uses this pin for its default led device, which is
+         * named ath9k-phy0, and reflects activity on either the 2 GHz or 5 GHz
+         * bands. This pin is connected to the WR2543's 2GHz WLAN LED.
+         */
+        ap9x_pci_setup_wmac_led_pin(0, WR2041N_GPIO_WMAC_LED_WLAN);
 
 	ap91_pci_init(art + WR2041N_PCIE_CALDATA_OFFSET, tmpmac);
 	ath79_setup_ar934x_eth_cfg(AR934X_ETH_CFG_SW_ONLY_MODE);
@@ -190,7 +194,6 @@ static void __init wr2041n_setup(void)
 
 	ath79_register_eth(0);
 
-	/*
 	ath79_gpio_output_select(WR2041N_GPIO_LED_WAN,
 				 AR934X_GPIO_OUT_LED_LINK4);
 	ath79_gpio_output_select(WR2041N_GPIO_LED_LAN1,
@@ -201,7 +204,6 @@ static void __init wr2041n_setup(void)
 				 AR934X_GPIO_OUT_LED_LINK1);
 	ath79_gpio_output_select(WR2041N_GPIO_LED_LAN4,
 				 AR934X_GPIO_OUT_LED_LINK0);
-	*/
 }
 
 MIPS_MACHINE(ATH79_MACH_TL_WR2041N_V1, "TL-WR2041N-v1","TP-LINK TL-WR2041N v1", wr2041n_setup);
