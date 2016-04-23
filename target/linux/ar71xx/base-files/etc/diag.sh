@@ -280,10 +280,12 @@ get_status_led() {
 	tl-wr703n | \
 	tl-wr710n | \
 	tl-wr720n-v3 | \
-    tl-wr2041n-v1 | \
 	tl-wr941nd-v6)
 		status_led="tp-link:blue:system"
 		;;
+	tl-wr2041n-v1)
+		status_led="tp-link:green:system"
+		;;		
 	tl-wr841n-v9)
 		status_led="tp-link:green:qss"
 		;;
